@@ -20,10 +20,6 @@ public class GameService {
         return gameRepository.save(game);
     }
 
-    public Game findById(Long id) throws GameException {
-        return gameRepository.findById(id).orElseThrow(() -> new GameException(id));
-    }
-
     public Game findCurrentGame(String player) throws GameException {
         var games = gameRepository.findByPlayerAndStatus(player, Status.PLAYING);
         if (games.isEmpty()) throw new GameException("Player without games");
@@ -45,10 +41,6 @@ public class GameService {
                 .player(player)
                 .status(Status.PLAYING)
                 .build());
-    }
-
-    public List<Game> listAll() {
-        return gameRepository.findAll();
     }
 
     public Game endGame(Long id) throws GameException {
